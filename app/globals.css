@@ -17,7 +17,7 @@
   --secondary: #ebe8e4;
   --secondary-foreground: #2d2a26;
   --muted: #ebe8e4;
-  --muted-foreground: #6b6560;
+  --muted-foreground: #8a857e;
   --accent: #d4c4b0;
   --accent-foreground: #2d2a26;
   --destructive: #b54a32;
@@ -51,7 +51,7 @@
   --secondary: #2d2b28;
   --secondary-foreground: #e8e5e1;
   --muted: #2d2b28;
-  --muted-foreground: #9a958e;
+  --muted-foreground: #7a756e;
   --accent: #3d3a35;
   --accent-foreground: #e8e5e1;
   --destructive: #d4694f;
@@ -160,4 +160,34 @@
 /* Caret styling */
 .slate-editor {
   caret-color: var(--foreground);
+}
+
+/* Margin note - minimal, frameless */
+.margin-note:empty:before {
+  content: "";
+  pointer-events: none;
+}
+
+.margin-note::selection,
+.margin-note *::selection {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.margin-note {
+  caret-color: var(--muted-foreground);
+}
+
+.margin-note:focus {
+  caret-color: var(--foreground);
+}
+
+/* Margin column - invisible scrollbar */
+.margin-column {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.margin-column::-webkit-scrollbar {
+  display: none;
 }
