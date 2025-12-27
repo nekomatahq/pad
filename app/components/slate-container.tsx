@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
+import Link from "next/link";
 import { SlateEditor } from "./slate-editor";
 import { MarginColumn } from "./margin-column";
 import { TabBar } from "./tab-bar";
@@ -203,7 +204,7 @@ export const SlateContainer = () => {
   }
 
   return (
-    <div className="min-h-screen w-full flex justify-center bg-background animate-fade-in">
+    <div className="min-h-screen w-full flex flex-col bg-background animate-fade-in">
       {/* Tab bar */}
       <TabBar
         tabs={tabsState.tabs}
@@ -215,30 +216,65 @@ export const SlateContainer = () => {
       />
 
       {/* Main content area with margin */}
-      <div className="flex w-full max-w-6xl">
-        {/* Writing area */}
-        <main className="flex-1 flex justify-center md:justify-end">
-          <div className="w-full max-w-[760px] px-6 py-16 md:py-24 lg:py-32">
-            <SlateEditor
-              key={`editor-${activeTab.id}-${editorKeyRef.current}`}
-              initialContent={activeTab.content}
-              onContentChange={handleContentChange}
+      <div className="flex-1 flex justify-center">
+        <div className="flex w-full max-w-6xl">
+          {/* Writing area */}
+          <main className="flex-1 flex justify-center md:justify-end">
+            <div className="w-full max-w-[760px] px-6 py-16 md:py-24 lg:py-32">
+              <SlateEditor
+                key={`editor-${activeTab.id}-${editorKeyRef.current}`}
+                initialContent={activeTab.content}
+                onContentChange={handleContentChange}
+              />
+            </div>
+          </main>
+
+          {/* Margin area - includes hover zone and column */}
+          <div className="hidden md:flex py-16 md:py-24 lg:py-32">
+            <MarginColumn
+              key={`margin-${activeTab.id}-${editorKeyRef.current}`}
+              notes={activeTab.marginNotes}
+              onCreateNote={handleCreateMarginNote}
+              onUpdateNote={handleUpdateMarginNote}
+              onDeleteNote={handleDeleteMarginNote}
+              onCreateNoteRef={handleCreateNoteRef}
             />
           </div>
-        </main>
-
-        {/* Margin area - includes hover zone and column */}
-        <div className="hidden md:flex py-16 md:py-24 lg:py-32">
-          <MarginColumn
-            key={`margin-${activeTab.id}-${editorKeyRef.current}`}
-            notes={activeTab.marginNotes}
-            onCreateNote={handleCreateMarginNote}
-            onUpdateNote={handleUpdateMarginNote}
-            onDeleteNote={handleDeleteMarginNote}
-            onCreateNoteRef={handleCreateNoteRef}
-          />
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="fixed bottom-0 left-0 right-0 px-4 py-3 flex justify-between items-center text-xs text-muted-foreground/50">
+        <div className="flex gap-3">
+          <Link
+            href="/privacy"
+            className="hover:text-muted-foreground transition-colors"
+            tabIndex={0}
+            aria-label="Privacy policy"
+          >
+            privacy
+          </Link>
+          <span>/</span>
+          <Link
+            href="/terms"
+            className="hover:text-muted-foreground transition-colors"
+            tabIndex={0}
+            aria-label="Terms of service"
+          >
+            terms
+          </Link>
+        </div>
+        <a
+          href="https://github.com/nekomatahq/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-muted-foreground transition-colors"
+          tabIndex={0}
+          aria-label="Nekomata GitHub"
+        >
+          Nekomata Suite tools / ネコマタ
+        </a>
+      </footer>
     </div>
   );
 };
