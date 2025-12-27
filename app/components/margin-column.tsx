@@ -149,20 +149,18 @@ export const MarginColumn = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div
-          className={`transition-opacity duration-300 ease-out ${
-            showControls ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          {/* Add button with hint */}
-          <div className="flex items-center gap-2 mb-4">
+        <div>
+          {/* Add button with hint - only show on hover */}
+          <div
+            className={`flex items-center gap-2 mb-4 transition-opacity duration-300 ease-out ${
+              isHovered ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
             <button
               onClick={handleCreateNote}
-              className={`w-7 h-7 flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground transition-colors duration-200 ${
-                showControls ? "" : "pointer-events-none"
-              }`}
+              className="w-7 h-7 flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground transition-colors duration-200"
               aria-label="Add margin note"
-              tabIndex={showControls ? 0 : -1}
+              tabIndex={isHovered ? 0 : -1}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -179,12 +177,15 @@ export const MarginColumn = ({
                 <path d="M12 5v14" />
               </svg>
             </button>
-            <span className="text-xs text-muted-foreground/40 italic">
-              for side notes
-            </span>
+            {/* Hint text only when no notes */}
+            {!hasNotes && (
+              <span className="text-xs text-muted-foreground/40 italic">
+                for side notes
+              </span>
+            )}
           </div>
 
-          {/* Notes list */}
+          {/* Notes list - always visible when notes exist */}
           <div className="space-y-3">
             {localNotes.map((note) => (
               <MarginNote
