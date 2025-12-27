@@ -1,55 +1,56 @@
 "use client";
 
 import { useRef, useEffect, useCallback, useState } from "react";
-import {
-  useMarginStorage,
-  type MarginNote as MarginNoteType,
-} from "@/app/hooks/use-margin-storage";
 import { MarginNote } from "./margin-note";
+import type { MarginNote as MarginNoteType } from "@/app/hooks/use-tabs-storage";
 
 const HOVER_TIMEOUT_MS = 15000;
 
 type MarginColumnProps = {
+  notes: MarginNoteType[];
+  onCreateNote: () => MarginNoteType;
+  onUpdateNote: (noteId: string, content: string) => void;
+  onDeleteNote: (noteId: string) => void;
   onCreateNoteRef?: (createFn: () => void) => void;
 };
 
-export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
-  const { getStoredNotes, createNote, updateNote, deleteNote } =
-    useMarginStorage();
-  const [notes, setNotes] = useState<MarginNoteType[]>([]);
+export const MarginColumn = ({
+  notes,
+  onCreateNote,
+  onUpdateNote,
+  onDeleteNote,
+  onCreateNoteRef,
+}: MarginColumnProps) => {
+  const [localNotes, setLocalNotes] = useState<MarginNoteType[]>(notes);
   const [isHovered, setIsHovered] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const pendingFocusRef = useRef<string | null>(null);
   const noteRefsMap = useRef<Map<string, HTMLDivElement>>(new Map());
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Sync local notes with props
   useEffect(() => {
-    const storedNotes = getStoredNotes();
-    setNotes(storedNotes);
-  }, [getStoredNotes]);
+    setLocalNotes(notes);
+  }, [notes]);
 
-  const hasNotes = notes.length > 0;
+  const hasNotes = localNotes.length > 0;
 
   // Handle hover visibility with 15-second auto-hide timer
   useEffect(() => {
-    // Clear any existing timer
     if (hoverTimerRef.current) {
       clearTimeout(hoverTimerRef.current);
       hoverTimerRef.current = null;
     }
 
     if (isHovered) {
-      // Show controls immediately on hover
       setShowControls(true);
-      
-      // Start 15-second timer to auto-hide (only if no notes)
+
       if (!hasNotes) {
         hoverTimerRef.current = setTimeout(() => {
           setShowControls(false);
         }, HOVER_TIMEOUT_MS);
       }
     } else {
-      // Hide controls when mouse leaves (unless there are notes)
       if (!hasNotes) {
         setShowControls(false);
       }
@@ -62,7 +63,6 @@ export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
     };
   }, [isHovered, hasNotes]);
 
-  // Always show controls when there are notes
   useEffect(() => {
     if (hasNotes) {
       setShowControls(true);
@@ -70,11 +70,11 @@ export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
   }, [hasNotes]);
 
   const handleCreateNote = useCallback(() => {
-    const newNote = createNote();
-    setNotes((prev) => [...prev, newNote]);
+    const newNote = onCreateNote();
+    setLocalNotes((prev) => [...prev, newNote]);
     pendingFocusRef.current = newNote.id;
     setShowControls(true);
-  }, [createNote]);
+  }, [onCreateNote]);
 
   useEffect(() => {
     if (onCreateNoteRef) {
@@ -90,14 +90,25 @@ export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
     }
   }, []);
 
-  const handleDeleteNote = useCallback(
-    (id: string) => {
-      deleteNote(id);
-      setNotes((prev) => {
-        const index = prev.findIndex((n) => n.id === id);
-        const updated = prev.filter((n) => n.id !== id);
+  const handleUpdateNote = useCallback(
+    (noteId: string, content: string) => {
+      setLocalNotes((prev) =>
+        prev.map((note) =>
+          note.id === noteId ? { ...note, content } : note
+        )
+      );
+      onUpdateNote(noteId, content);
+    },
+    [onUpdateNote]
+  );
 
-        // Focus previous note or next note after deletion
+  const handleDeleteNote = useCallback(
+    (noteId: string) => {
+      onDeleteNote(noteId);
+      setLocalNotes((prev) => {
+        const index = prev.findIndex((n) => n.id === noteId);
+        const updated = prev.filter((n) => n.id !== noteId);
+
         if (updated.length > 0) {
           const focusIndex = Math.max(0, index - 1);
           const focusNote = updated[focusIndex];
@@ -107,11 +118,11 @@ export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
           }
         }
 
-        noteRefsMap.current.delete(id);
+        noteRefsMap.current.delete(noteId);
         return updated;
       });
     },
-    [deleteNote]
+    [onDeleteNote]
   );
 
   const handleMouseEnter = useCallback(() => {
@@ -131,7 +142,7 @@ export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
         onMouseLeave={handleMouseLeave}
         aria-hidden="true"
       />
-      
+
       {/* Actual margin column content */}
       <aside
         className="margin-column hidden md:block w-48 lg:w-56 xl:w-64 shrink-0"
@@ -175,12 +186,12 @@ export const MarginColumn = ({ onCreateNoteRef }: MarginColumnProps) => {
 
           {/* Notes list */}
           <div className="space-y-3">
-            {notes.map((note) => (
+            {localNotes.map((note) => (
               <MarginNote
                 key={note.id}
                 id={note.id}
                 initialContent={note.content}
-                onUpdate={updateNote}
+                onUpdate={handleUpdateNote}
                 onDelete={handleDeleteNote}
                 onMount={handleNoteMount}
               />

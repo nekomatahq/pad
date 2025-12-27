@@ -1,29 +1,41 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
-import { useLocalStorage } from "@/app/hooks/use-local-storage";
 
-export const SlateEditor = () => {
+type SlateEditorProps = {
+  initialContent: string;
+  onContentChange: (content: string) => void;
+};
+
+export const SlateEditor = ({
+  initialContent,
+  onContentChange,
+}: SlateEditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
-  const { getStoredContent, saveContent } = useLocalStorage();
   const isInitializedRef = useRef(false);
+
+  useEffect(() => {
+    if (!editorRef.current) return;
+
+    // Reset initialization flag when component remounts (tab switch)
+    isInitializedRef.current = false;
+  }, []);
 
   useEffect(() => {
     if (!editorRef.current || isInitializedRef.current) return;
     isInitializedRef.current = true;
 
-    const storedContent = getStoredContent();
-    if (storedContent) {
-      editorRef.current.innerHTML = storedContent;
+    if (initialContent) {
+      editorRef.current.innerHTML = initialContent;
     }
 
     editorRef.current.focus();
-  }, [getStoredContent]);
+  }, [initialContent]);
 
   const handleInput = useCallback(() => {
     if (!editorRef.current) return;
-    saveContent(editorRef.current.innerHTML);
-  }, [saveContent]);
+    onContentChange(editorRef.current.innerHTML);
+  }, [onContentChange]);
 
   return (
     <div
@@ -40,4 +52,3 @@ export const SlateEditor = () => {
     />
   );
 };
-
