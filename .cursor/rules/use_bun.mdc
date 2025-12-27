@@ -1,0 +1,81 @@
+---
+alwaysApply: true
+---
+Bun is the only approved JavaScript runtime.
+
+Allowed
+
+bun install
+
+bun run
+
+bun test
+
+bunx
+
+Bun-native APIs (Bun.env, Bun.file, etc.)
+
+Disallowed
+
+Node.js runtime usage
+
+npm, yarn, pnpm
+
+Node-specific globals or assumptions (process unless Bun-compatible)
+
+Node-only polyfills
+
+Scope
+
+Applies to:
+
+Local development
+
+CI workflows
+
+Scripts
+
+Tooling
+
+MDC automation
+
+All commands, docs, and examples must assume Bun by default.
+
+Dependency Rule
+
+Dependencies must:
+
+Be compatible with Bun
+
+Avoid Node-only native bindings unless verified
+
+Prefer web-standard or Bun-first libraries
+
+If a dependency requires Node-specific behavior:
+
+It must be justified explicitly
+
+Or replaced
+
+Documentation Rule
+
+All README instructions use Bun
+
+No alternative runtime instructions
+
+No “Node.js also works” language
+
+This project is Bun-first, Bun-only.
+
+Enforcement
+
+If a script or doc references Node or npm:
+
+Treat it as a violation
+
+Fix it immediately
+
+Do not add compatibility layers
+
+Runtime ambiguity causes entropy.
+Bun removes it.

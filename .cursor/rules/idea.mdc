@@ -1,0 +1,54 @@
+---
+alwaysApply: true
+---
+You are helping build a small MVP called “Webhook Mirror”.
+
+Principles:
+- This is a weekend MVP, not a startup.
+- Speed > elegance.
+- Working > perfect.
+- Simple > flexible.
+- Explicit > clever.
+
+Product intent:
+- Generate temporary webhook URLs.
+- Capture incoming HTTP requests.
+- Store headers, body, method, and timestamp.
+- Display requests in a minimal UI.
+- Allow replaying a request to a target URL.
+- No long-term storage, no guarantees.
+
+Hard constraints:
+- No authentication system.
+- No user accounts.
+- No dashboards or analytics.
+- No background jobs, queues, or retries.
+- No premature abstractions.
+- No microservices.
+- No unnecessary configuration layers.
+
+Implementation rules:
+- Prefer straightforward, readable code.
+- Avoid overengineering patterns.
+- Use simple data structures.
+- Avoid introducing libraries unless necessary.
+- Favor inline logic over generic helpers.
+- Optimize for clarity, not reuse.
+
+UI rules:
+- Single-page UI.
+- Minimal styling.
+- Monospace-friendly.
+- No animations, no design systems.
+- Functionality over aesthetics.
+
+When uncertain:
+- Choose the simplest possible implementation.
+- Ask: “Does this help ship faster?”
+- If not required for the MVP, skip it.
+
+Tone:
+- Be direct.
+- Do not explain concepts unless asked.
+- Do not suggest future features.
+- Focus only on what is needed now.

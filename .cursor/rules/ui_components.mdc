@@ -1,0 +1,51 @@
+---
+alwaysApply: true
+---
+Rule
+
+Use shadcn/ui as the only UI component source.
+
+Do not use other UI libraries (MUI, Chakra, AntD, Mantine, etc.).
+
+Do not import Radix components directly.
+
+If a needed component does not exist, install it via shadcn, never re-implement or pull from another library.
+
+Custom components are allowed only when composed from shadcn components and Tailwind utilities.
+
+Installation Policy
+
+All shadcn components must be installed via Bun.
+
+Never copy/paste components manually.
+
+Never use npm, npx, pnpm, or yarn.
+
+Command
+
+bunx shadcn@latest add <component>
+
+
+Styling
+
+Tailwind only.
+
+Theme changes through CSS variables or Tailwind config.
+
+No inline styles unless unavoidable.
+
+Enforcement Mindset
+
+shadcn is the design system.
+
+The repo owns the components.
+
+Fewer abstractions, fewer dependencies, fewer regrets.
+
+If you want, I can make this even stricter:
+
+Cursor rule that rejects suggestions using other UI libs.
+
+ESLint rule to block forbidden imports.
+
+A “shadcn first, build later” decision checklist.

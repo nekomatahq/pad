@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+---
+Product: Webhook Mirror
+
+Webhook Mirror is a developer utility for capturing, inspecting, and replaying webhook requests.
+
+Purpose:
+- Provide temporary webhook endpoints.
+- Capture incoming HTTP requests exactly as received.
+- Allow developers to inspect headers, body, method, and timestamps.
+- Allow replaying captured requests to a target URL for debugging.
+
+Non-goals:
+- This is not a reliability service.
+- This is not an analytics platform.
+- This does not guarantee delivery, retries, or durability.
+- This does not verify webhook signatures.
+- This does not integrate with third-party providers.
+
+Product shape:
+- Authenticated dashboard for managing webhook endpoints.
+- Public webhook endpoints for receiving requests.
+- Minimal UI focused on clarity and speed.
+- One primary workflow: capture → inspect → replay.
+
+Constraints:
+- Each tool must be simple, predictable, and limited in scope.
+- Features are intentionally minimal.
+- No unnecessary abstractions.
+- No future-facing features unless explicitly requested.
+
+Quality bar:
+- Correctness over cleverness.
+- Explicit behavior over magic.
+- Type-safe code only.
+- Straightforward implementations preferred.
+
+If a feature or behavior does not directly support capturing, inspecting, or replaying webhooks, it should not be implemented.

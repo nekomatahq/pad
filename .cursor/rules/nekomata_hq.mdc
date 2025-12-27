@@ -1,0 +1,67 @@
+---
+alwaysApply: true
+---
+Rule
+
+Nekomata HQ offers one paid plan only: Nekomata Suite.
+
+There are no per-tool subscriptions, no tiers per product, no feature gating per app.
+
+A single subscription grants full access to all Nekomata tools, present and future.
+
+Subscription Cards
+
+Pricing pages must display one subscription card only.
+
+The card copy must communicate:
+
+Full access to the entire Nekomata Suite
+
+Tools are listed individually with their own feature sets
+
+No separate checkout per tool
+
+Allowed Copy (conceptual)
+
+“Get full access to the Nekomata Suite”
+
+“One subscription. All tools.”
+
+“All current and future Nekomata tools included”
+
+“Features are defined per tool, not per plan”
+
+Disallowed
+
+Tool-specific pricing
+
+Multiple plans (Starter, Pro, Enterprise, etc.)
+
+Upgrade/downgrade logic between tools
+
+Feature matrices comparing tools against each other
+
+Product Philosophy
+
+Users subscribe to Nekomata, not to tools.
+
+Tools are expressions of the same ecosystem.
+
+Pricing stays boring so the software can be sharp.
+
+Design Implications
+
+One CTA: Get full access
+
+Tool pages describe what the tool does, not how much it costs.
+
+Billing logic lives at the account level, never the tool level.
+
+Future Rule
+
+Any new tool automatically ships as part of the Suite.
+
+No pricing discussion is allowed at the tool launch level.
+
+This keeps Nekomata clean, confident, and non-desperate.
+No nickel-and-diming. No “growth hacks”. Just “this is the suite, take it or don’t”.

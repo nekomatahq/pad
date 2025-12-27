@@ -1,0 +1,34 @@
+---
+alwaysApply: true
+---
+Naming Convention Rule
+
+Context-aware naming is mandatory. Do not mix conventions.
+
+Next.js (frontend, routing, public-facing)
+
+Use kebab-case.
+
+Applies to:
+
+App Router folders and routes
+app/webhook-mirror/page.tsx
+
+URL paths
+/api/rate-limit
+
+Public file names
+open-source-policy.md
+
+CSS classes
+user-profile-card
+
+Reason:
+
+URLs, filesystems, and humans prefer kebab-case
+
+Case-insensitive safe
+
+Industry standard for web interfaces
+
+Do NOT use camelCase or snake_case in routes or public paths.
