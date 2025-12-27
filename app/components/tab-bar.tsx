@@ -83,7 +83,7 @@ export const TabBar = ({
         aria-hidden="true"
       />
 
-      {/* Tab bar */}
+      {/* Tab bar - aligned with text input */}
       <div
         className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-opacity duration-300 ease-out ${
           showControls ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -93,52 +93,63 @@ export const TabBar = ({
         role="tablist"
         aria-label="Writing tabs"
       >
-        <div className="flex items-center gap-1 px-4 py-3">
-          {/* Tab items */}
-          {tabs.map((tab) => (
-            <TabItem
-              key={tab.id}
-              id={tab.id}
-              title={tab.title}
-              isActive={tab.id === activeTabId}
-              canClose={tabs.length > 1}
-              onSelect={onSelectTab}
-              onTitleChange={onRenameTab}
-              onClose={onDeleteTab}
-            />
-          ))}
+        {/* Match the main content layout structure */}
+        <div className="flex w-full max-w-6xl">
+          {/* Align with the writing area */}
+          <div className="flex-1 flex justify-center md:justify-end">
+            <div className="w-full max-w-[760px] px-6 py-3">
+              <div className="flex items-center gap-1">
+                {/* Tab items */}
+                {tabs.map((tab) => (
+                  <TabItem
+                    key={tab.id}
+                    id={tab.id}
+                    title={tab.title}
+                    isActive={tab.id === activeTabId}
+                    canClose={tabs.length > 1}
+                    onSelect={onSelectTab}
+                    onTitleChange={onRenameTab}
+                    onClose={onDeleteTab}
+                  />
+                ))}
 
-          {/* Add tab button */}
-          <button
-            onClick={onCreateTab}
-            className="ml-2 w-6 h-6 flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground transition-colors duration-150"
-            aria-label="Add new tab"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5v14" />
-            </svg>
-          </button>
+                {/* Add tab button */}
+                <button
+                  onClick={onCreateTab}
+                  className="ml-1 w-6 h-6 flex items-center justify-center text-muted-foreground/40 hover:text-muted-foreground transition-colors duration-150"
+                  aria-label="Add new tab"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                  </svg>
+                </button>
 
-          {/* Hint text for single tab */}
-          {tabs.length === 1 && (
-            <span className="ml-2 text-xs text-muted-foreground/40 italic">
-              add more sheets
-            </span>
-          )}
+                {/* Hint text for single tab */}
+                {tabs.length === 1 && (
+                  <span className="ml-2 text-xs text-muted-foreground/40 italic">
+                    add more sheets
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          {/* Spacer to match margin column width */}
+          <div className="hidden md:block w-48 lg:w-56 xl:w-64 shrink-0" />
+          <div className="hidden md:block w-24 lg:w-32 shrink-0" />
         </div>
       </div>
     </>
   );
 };
-

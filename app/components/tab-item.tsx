@@ -96,7 +96,7 @@ export const TabItem = ({
       onDoubleClick={handleDoubleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative flex items-center gap-1 px-3 py-1.5 text-sm transition-colors duration-150 ${
+      className={`group relative flex items-center w-32 px-3 py-1.5 text-sm transition-colors duration-150 ${
         isActive
           ? "text-foreground"
           : "text-muted-foreground/60 hover:text-muted-foreground"
@@ -111,7 +111,7 @@ export const TabItem = ({
         suppressContentEditableWarning
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
-        className={`outline-none max-w-[120px] truncate ${
+        className={`outline-none flex-1 truncate text-left ${
           isEditing ? "cursor-text" : "cursor-pointer"
         }`}
         spellCheck={false}
@@ -120,7 +120,7 @@ export const TabItem = ({
       <span
         onClick={handleClose}
         onMouseDown={(e) => e.preventDefault()}
-        className={`ml-1 w-4 h-4 flex items-center justify-center text-muted-foreground/40 hover:text-destructive rounded transition-opacity duration-150 ${
+        className={`shrink-0 w-4 h-4 flex items-center justify-center text-muted-foreground/40 hover:text-destructive rounded transition-opacity duration-150 ${
           showCloseButton ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         aria-label="Close tab"
