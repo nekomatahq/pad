@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nekomata Slate",
-  description: "A distraction-free writing canvas",
+  title: "pad",
+  description: "Minimal text scratchpad",
 };
 
 export default function RootLayout({
